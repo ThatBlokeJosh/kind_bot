@@ -24,6 +24,39 @@ def list_of_following():
             list_of_people_i_follow.append(guy_i_follow)
     return list_of_people_i_follow
 
+def remove_following():
+    list_of_users = []
+    checkpoint = 0
+    with open(f"{your_username}.txt", "r") as mby_nothing_to_remove:
+        if mby_nothing_to_remove.readlines() == []:
+            print("Your list is empty")
+        else:
+            with open(f"{your_username}.txt", "r") as remove_users:
+                for line in remove_users.readlines():
+                    user = (line.rstrip())
+                    list_of_users.append(user)
+                    
+                while checkpoint == 0:
+                    print(list_of_users)
+                    with open(f"{your_username}.txt", "r") as remove_users:
+                        guy_i_follow = input("Enter the username you want to delete: ")
+                        text = remove_users.read()
+                        list = []        
+                        for line in text.splitlines():
+                            list.append(line)
+                            
+                        if guy_i_follow in list_of_users:
+                            list.remove(guy_i_follow)
+                            with open(f"{your_username}.txt", "w") as remove_users:
+                                for line in list:
+                                    remove_users.write(line + "\n")
+
+                                print("Username was removed")
+                                checkpoint = 1
+                        else:
+                            print("Username not found")
+                            break
+                                   
 try:
     your_username = input("Enter your username: ")
     your_password = input("Enter your password: ") 
@@ -38,24 +71,27 @@ except:
     pass
 
 while 0 == 0:
-    start = input("What would you like to do? \n(r=run the script\nv=view people in my list,\na=add people to my list,\nd=delete people from my list,\nq=quit)\n: ").lower()
+    start = input("What would you like to do? \n(l=like post of people in your list,\nv=view people in my list,\na=add people to my list,\nd=delete people from my list,\nm=send message,\nq=quit)\n: ").lower()
 
     if start == "q":
         print("See ya later")
         break
     
-    while start == "r":
+    elif start == "r":
         print("Running")
         break
         
-    while start == "v":
+    elif start == "v":
         print(list_of_following())
         break
         
-    while start == "a":
+    elif start == "a":
         add_people_you_like()
         break
     
-    while start == "d":
-        print("Uhm deleting...")
+    elif start == "d":
+        remove_following()
         break
+    
+    else:
+        print("Invalid input")
