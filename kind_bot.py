@@ -11,7 +11,7 @@ def add_people_you_like():
             if add_following_account == "q":
                 break
             elif add_following_account in list_of_following():
-                print("Account already exists. Press q to quit")
+               print("Account already exists. Press q to quit")
             else:
                 txt_of_liked_people.write(add_following_account + "\n")
                 print("Account has been added. Press q to quit")
@@ -79,19 +79,15 @@ while 0 == 0:
     
     elif start == "r":
         print("Running")
-        break
         
     elif start == "v":
         print(list_of_following())
-        break
         
     elif start == "a":
         add_people_you_like()
-        break
     
     elif start == "d":
         remove_following()
-        break
     
     else:
         print("Invalid input")
