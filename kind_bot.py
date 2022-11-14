@@ -1,4 +1,11 @@
 from instabot import Bot
+import glob
+import os
+cookie_del = glob.glob("config/*cookie.json")
+try:
+    os.remove(cookie_del[0])
+except:
+    pass
 
 bot = Bot()
 
@@ -56,13 +63,23 @@ def remove_following():
                         else:
                             print("Username not found")
                             break
-                                   
-try:
-    your_username = input("Enter your username: ")
-    your_password = input("Enter your password: ") 
-    #bot.login(username=your_username, password=your_password)
-except:
-    print("Username or password are not valid!")
+
+def like_posts(username):
+    bot.like_user(username, amount=10)
+    
+def comments():
+    list_of_users = []
+    with open(f"{your_username}.txt", "r") as comment_users:
+        for line in comment_users.readlines():
+            user = (line.rstrip())
+            user_id = bot.get_user_id_from_username(user)
+            media_id = bot.get_last_user_medias(user_id, count=1)
+            bot.comment(media_id, "ILY <3 (tohle je jen bot (za chvili udelam nejakou API s komentarema na urovni))")
+            
+your_username = input("Enter your username: ")
+your_password = input("Enter your password: ") 
+    
+bot.login(username=your_username, password=your_password)
     
 try:
     with open(f"{your_username}.txt", "x") as just_creating:
@@ -71,7 +88,7 @@ except:
     pass
 
 while 0 == 0:
-    start = input("What would you like to do? \n(l=like post of people in your list,\nv=view people in my list,\na=add people to my list,\nd=delete people from my list,\nm=send message,\nq=quit)\n: ").lower()
+    start = input("l=like post of people in your list,\nv=view people in my list,\na=add people to my list,\nd=delete people from my list,\nm=send message,\nq=quit)\nc=comment posts\n: ").lower()
 
     if start == "q":
         print("See ya later")
@@ -88,6 +105,9 @@ while 0 == 0:
     
     elif start == "d":
         remove_following()
+    
+    elif start == "c":
+        comments()
     
     else:
         print("Invalid input")
